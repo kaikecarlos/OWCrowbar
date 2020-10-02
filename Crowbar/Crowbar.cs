@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using OWML.ModHelper;
+using OWML.Common;
 
 namespace Crowbar
 {
@@ -10,7 +11,7 @@ namespace Crowbar
         protected Transform _holdTransform = GameObject.Find("ToolHoldTransform").transform;
 
         private Transform _transform;
-        private GameObject _crowbarGameObject;
+        public GameObject _crowbarGameObject;
         protected bool _isEquipped;
         protected bool __isPuttingAway;
 

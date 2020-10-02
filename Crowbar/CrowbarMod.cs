@@ -8,6 +8,7 @@ namespace Crowbar
     {
         private GameObject duckGM;
         private GameObject duck1;
+        private Crowbar crowbar;
         private void Start ()
         {
             var duck = ModHelper.Assets.Load3DObject("duck.obj", "duck.png");
@@ -21,12 +22,18 @@ namespace Crowbar
             if (ev == Events.AfterAwake)
             {
                 duck1.name = "prop_duck";
-                ModHelper.Console.WriteLine($"A {duck1.name}", MessageType.Info);
+                duck1.transform.position = new Vector3(0, 0, 0);
+
                 duckGM = new GameObject("DuckTool");
+                duckGM.SetActive(false);
+                duckGM.transform.position = new Vector3(0, 0, 0);
+                duckGM.transform.localScale = new Vector3(1, 1, 1);
+
+                crowbar = duckGM.AddComponent<Crowbar>();
+                crowbar._crowbarGameObject = GameObject.Find("Props_HEA_Signalscope");
+                duckGM.SetActive(true);
                 duckGM.transform.parent = GameObject.Find("PlayerCamera").transform;
                 duck1.transform.parent = duckGM.transform;
-                ModHelper.Console.WriteLine($"Parente de duck1 {duck1.transform.parent.name}", MessageType.Info);
-                ModHelper.Console.WriteLine($"Parente de DuckGm {duckGM.transform.parent.name}", MessageType.Info);
             }
         }
         private void OnDuckLoaded (GameObject duck)
@@ -39,7 +46,9 @@ namespace Crowbar
         {
             if (Input.GetMouseButtonDown(0))
             {
-                duck1.SetActive(true);
+                PlayerTool playerTool = null;
+                playerTool = crowbar;
+                playerTool.EquipTool();
             }
         }
     }
