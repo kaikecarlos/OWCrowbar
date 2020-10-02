@@ -7,10 +7,12 @@ namespace Crowbar
     public class Crowbarmod : ModBehaviour
     {
         private GameObject duckGM;
+        private GameObject duck1;
         private void Start ()
         {
             var duck = ModHelper.Assets.Load3DObject("duck.obj", "duck.png");
             duck.Loaded += OnDuckLoaded;
+            ModHelper.Console.WriteLine($"{duck}", MessageType.Info);
             ModHelper.Events.Event += OnEvent;
         }
 
@@ -18,7 +20,8 @@ namespace Crowbar
         {
             if (ev == Events.AfterAwake)
             {
-                var duck1 = GameObject.Find("duck");
+                duck1.name = "prop_duck";
+                ModHelper.Console.WriteLine($"A {duck1.name}", MessageType.Info);
                 duckGM = new GameObject("DuckTool");
                 duckGM.transform.parent = GameObject.Find("PlayerCamera").transform;
                 duck1.transform.parent = duckGM.transform;
@@ -28,16 +31,15 @@ namespace Crowbar
         }
         private void OnDuckLoaded (GameObject duck)
         {
-            duck.SetActive(false);
+            duck1 = duck;
+            duck1.SetActive(false);
         }
 
         private void Update ()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                //PlayerTool playerTool = this._crowbar;
-                ///playerTool.EquipTool();
-                //this._equippedTool = playerTool;
+                duck1.SetActive(true);
             }
         }
     }
