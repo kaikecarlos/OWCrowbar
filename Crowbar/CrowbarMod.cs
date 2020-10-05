@@ -28,12 +28,15 @@ namespace Crowbar
                 duckGameObject.SetActive(false);
 
                 duckModel.transform.parent = duckGameObject.transform;
-                duckModel.transform.position = new Vector3(0, 0, 0);
+                duckModel.transform.position = new Vector3(0, -0.42f, 0.5f);
                 duckModel.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
                 crowbar = duckGameObject.AddComponent<Crowbar>();
                 crowbar._crowbarGameObject = duckModel;
                 duckGameObject.SetActive(true);
+                // Debug
+                ModHelper.Console.WriteLine($"{duckModel.transform.parent}");
+                ModHelper.Console.WriteLine($"{duckGameObject.transform.parent}");
             }
         }
         private void OnDuckLoaded (GameObject duck)
@@ -50,6 +53,7 @@ namespace Crowbar
                 PlayerTool playerTool = null;
                 playerTool = crowbar;
                 playerTool.EquipTool();
+                Instantiate(duckModel);
             }
         }
     }
